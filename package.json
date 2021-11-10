@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "type": "module",
   "bin": {
-    "dcwc": "src/dcwc.js"
+    "dcwc": "src/bin/dcwc.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,8 @@
   },
   "homepage": "https://github.com/P3ntest/dcwc#readme",
   "dependencies": {
-    "node-fetch": "^3.0.0"
+    "chalk": "^4.1.2",
+    "node-fetch": "^3.1.0",
+    "user-settings": "^0.2.0"
   }
 }
