@@ -7,6 +7,7 @@ const fetch = (...args) =>
 const userSettings = require("user-settings");
 const getEndpoint = require("../endpoint");
 const settings = userSettings.file(".dcwc");
+const chalk = require("chalk");
 
 (async () => {
   const cwd = process.cwd();
@@ -18,11 +19,32 @@ const settings = userSettings.file(".dcwc");
   const args = process.argv.slice(2, process.argv.length);
 
   if (args.length == 0) {
-    console.log("Please specify a sub command.");
+    console.log(
+      chalk.redBright("Please specify a sub command. ") +
+        chalk.yellow("dcwc help")
+    );
     process.exit(0);
   }
 
-  if (args[0].toLowerCase() == "init") {
+  if (args[0].toLowerCase() == "help") {
+    console.log(chalk.green.bold("DCWC Help"));
+    console.log(
+      chalk.yellow("dcwc init <key> ") +
+        chalk.redBright("- Init discord.config.js")
+    );
+    console.log(
+      chalk.yellow("dcwc push ") +
+        chalk.redBright("- Update current structure.")
+    );
+    console.log(
+      chalk.yellow(
+        "dcwc login <token> " + chalk.redBright("- Login to with token")
+      )
+    );
+    console.log(
+      chalk.yellow("dcwc logout " + chalk.redBright("- Forget token"))
+    );
+  } else if (args[0].toLowerCase() == "init") {
     if (args.length < 2) {
       console.log("Please specify your bot key.");
       process.exit(0);
