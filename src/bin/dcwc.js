@@ -114,8 +114,18 @@ const chalk = require("chalk");
       process.exit(0);
     }
 
-    settings.set("token", args[1]);
-    console.log(chalk.green("You are logged in."));
+    const req = await fetch(`${endPoint}api/auth.json?token=${args[1]}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (req.status == 200) {
+      settings.set("token", args[1]);
+      console.log(chalk.green("You are logged in."));
+    } else {
+      console.log(chalk.red("Invalid token. Login failed."));
+    }
   } else if (args[0].toLowerCase() == "logout") {
     settings.unset("token");
     console.log(chalk.green("You are logged out."));
