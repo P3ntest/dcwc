@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#! /usr/bin/env -S node --no-warnings
 
 const fs = require("fs");
 const path = require("path");
@@ -71,7 +71,13 @@ const chalk = require("chalk");
       )
     );
 
-    console.log("discord.config.json created. Use npx dcwc push to update.");
+    console.log(
+      chalk.green(
+        "discord.config.json created. Use " +
+          chalk.yellow.bold("npx dcwc push") +
+          " to update."
+      )
+    );
   } else if (args[0].toLowerCase() == "push") {
     if (!settings.get("token")) {
       console.log(
@@ -80,7 +86,7 @@ const chalk = require("chalk");
       process.exit(0);
     }
     if (!fs.existsSync(configPath)) {
-      console.log("Project not found. Use npx dcwc init first.");
+      console.log(chalk.red("Project not found. Use npx dcwc init first."));
       process.exit(0);
     }
 
@@ -98,20 +104,20 @@ const chalk = require("chalk");
     const res = await req.json();
 
     if (req.status == 200) {
-      console.log("Config structure updated successfully.");
+      console.log(chalk.green("Config structure updated successfully."));
     } else {
       console.log("Error. Status: " + req.status + ". " + res);
     }
   } else if (args[0].toLowerCase() == "login") {
     if (args.length < 2) {
-      console.log("Please specify your token.");
+      console.log(chalk.red("Please specify your token."));
       process.exit(0);
     }
 
     settings.set("token", args[1]);
-    console.log("You are logged in.");
+    console.log(chalk.green("You are logged in."));
   } else if (args[0].toLowerCase() == "logout") {
     settings.unset("token");
-    console.log("You are logged out.");
+    console.log(chalk.green("You are logged out."));
   }
 })();
