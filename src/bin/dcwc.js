@@ -1,4 +1,4 @@
-#! /usr/bin/env -S node --no-warnings
+#!/usr/bin/env node
 
 const fs = require("fs");
 const path = require("path");
@@ -106,7 +106,9 @@ const chalk = require("chalk");
     if (req.status == 200) {
       console.log(chalk.green("Config structure updated successfully."));
     } else {
-      console.log("Error. Status: " + req.status + ". " + res);
+      console.log(
+        "Error. Status: " + req.status + ". " + JSON.stringify(res, null, 4)
+      );
     }
   } else if (args[0].toLowerCase() == "login") {
     if (args.length < 2) {
@@ -129,5 +131,16 @@ const chalk = require("chalk");
   } else if (args[0].toLowerCase() == "logout") {
     settings.unset("token");
     console.log(chalk.green("You are logged out."));
+  } else if (args[0].toLowerCase() == "version") {
+    console.log(
+      "DCWC v" +
+        chalk.green(require("../../package.json").version) +
+        " using " +
+        getEndpoint()
+    );
+  } else {
+    console.log(
+      chalk.red("Unknown command. Use npx dcwc help to see all commands.")
+    );
   }
 })();
