@@ -15,6 +15,7 @@ const chalk = require("chalk");
   const endPoint = getEndpoint();
 
   const configPath = path.join(cwd, "discord.config.json");
+  const gitignorePath = path.join(cwd, ".gitignore");
 
   const args = process.argv.slice(2, process.argv.length);
 
@@ -70,6 +71,14 @@ const chalk = require("chalk");
         4
       )
     );
+
+    const gitignoreAppendix = "\n# discordcp.dev cache\n.discordcp.cache";
+
+    if (fs.existsSync(gitignorePath)) {
+      fs.appendFileSync(gitignorePath, gitignoreAppendix);
+    } else {
+      fs.writeFileSync(gitignorePath, gitignoreAppendix);
+    }
 
     console.log(
       chalk.green(
